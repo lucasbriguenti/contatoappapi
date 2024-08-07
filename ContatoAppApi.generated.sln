@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContatoAppApi", "ContatoAppApi.csproj", "{70FDBEBC-7609-48AE-8356-2236BB1AD2BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70FDBEBC-7609-48AE-8356-2236BB1AD2BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70FDBEBC-7609-48AE-8356-2236BB1AD2BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70FDBEBC-7609-48AE-8356-2236BB1AD2BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70FDBEBC-7609-48AE-8356-2236BB1AD2BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {83599B83-CB5D-4A78-BBF5-E3748C26C40E}
+	EndGlobalSection
+EndGlobal
