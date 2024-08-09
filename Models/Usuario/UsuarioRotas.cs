@@ -1,4 +1,3 @@
-using System;
 using ContatoAppApi.Data;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,5 +1,6 @@
 using ContatoAppApi.Data;
 using ContatoAppApi.Models.RedeSocial.Dtos;
+using ContatoAppApi.Repositorios;
 using Microsoft.EntityFrameworkCore;
 
 namespace ContatoAppApi.Models.RedeSocial;
@@ -10,7 +11,7 @@ public static class RedeSociaisRotas
     {
         var rotas = app.MapGroup("RedesSociais")
             .WithTags("RedesSociais");
-        rotas.MapPost("", async (AdicionarRedeSocialDto dto, AppDbContext context) =>
+        rotas.MapPost("", async (AdicionarRedeSocialDto dto, IRepositorioBase<RedeSocial> repositorio) =>
         {
             if (string.IsNullOrEmpty(dto.Nome))
             {
@@ -22,14 +23,13 @@ public static class RedeSociaisRotas
                 Nome = dto.Nome,
                 UrlBase = dto.UrlBase
             };
-            await context.RedeSociais.AddAsync(redeSocial);
-            await context.SaveChangesAsync();
+            await repositorio.Salvar(redeSocial);
             return Results.Created("{id}", redeSocial);
         });
 
-        rotas.MapGet("{id}", async (int id, AppDbContext context) =>
+        rotas.MapGet("{id}", async (int id, IRepositorioBase<RedeSocial> repositorio) =>
         {
-            var resultado = await context.RedeSociais.FirstOrDefaultAsync(x => x.Id == id);
+            var resultado = await repositorio.ObterPorId(id);
             return resultado is null
             ? Results.NotFound()
             : Results.Ok(resultado);
@@ -40,26 +40,21 @@ public static class RedeSociaisRotas
             return context.RedeSociais.ToListAsync();
         });
 
-        rotas.MapDelete("{id}", async (int id, AppDbContext context) =>
+        rotas.MapDelete("{id}", async (int id, IRepositorioBase<RedeSocial> repositorio) =>
         {
-            var redeSocial = await context.RedeSociais.FirstOrDefaultAsync(x => x.Id == id);
-            if (redeSocial is null)
-                return Results.NotFound();
-
-            context.RedeSociais.Remove(redeSocial);
-            await context.SaveChangesAsync();
-            return Results.Ok();
+            var removeu = await repositorio.Remover(id);
+            return removeu ? Results.Ok() : Results.NotFound();
         });
 
-        rotas.MapPut("{id}", async (int id, AdicionarRedeSocialDto dto, AppDbContext context) =>
+        rotas.MapPut("{id}", async (int id, AdicionarRedeSocialDto dto, IRepositorioBase<RedeSocial> repositorio) =>
         {
-            var redeSocial = await context.RedeSociais.FirstOrDefaultAsync(x => x.Id == id);
+            var redeSocial = await repositorio.ObterPorId(id);
             if (redeSocial is null)
                 return Results.NotFound();
 
             redeSocial.Nome = dto.Nome;
             redeSocial.UrlBase = dto.UrlBase;
-            await context.SaveChangesAsync();
+            await repositorio.Commit();
             return Results.Ok(redeSocial);
         });
 
